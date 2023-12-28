@@ -1,3 +1,4 @@
 /includes/config.php
 /js/scripts.js
 /node_modules/**
+/css/tailwind_output.css
