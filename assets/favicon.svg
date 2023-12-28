@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="black" stroke-linecap="round"
+	stroke-linejoin="round">
+	<!-- Background Circle -->
+	<circle stroke-width="0" cx="12" cy="12" r="12" fill="grey" />
+
+	<!-- Bar -->
+	<line stroke-width="1.25" x1="2" y1="12" x2="22" y2="12" />
+
+	<!-- Weights -->
+	<line stroke-width="2" x1="4" y1="7" x2="4" y2="17" />
+	<line stroke-width="2" x1="20" y1="7" x2="20" y2="17" />
+</svg>

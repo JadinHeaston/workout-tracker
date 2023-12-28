@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+	@apply flex flex-col items-center justify-between h-screen w-full text-black dark:text-white;
+}
+
+a {
+	@apply text-blue-400 hover:text-blue-600 delay-100;
+}
+
+header a {
+	@apply text-black dark:text-white;
+}
+
+header {
+	@apply w-full text-2xl bg-red-400;
+}
+
+nav {
+	@apply fixed top-0.5 left-0.5 flex flex-col items-start;
+}
+
+nav>.main-nav-menu {
+	@apply flex flex-col items-start justify-start text-start border border-gray-400 rounded-md bg-cyan-400;
+}
+
+nav>.main-nav-menu-item {
+	@apply p-1 w-full;
+}
+
+main {
+	@apply w-full bg-orange-400 grow;
+}
