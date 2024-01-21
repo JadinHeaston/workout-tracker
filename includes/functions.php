@@ -6,7 +6,7 @@
  * @param integer $seconds
  * @return string
  */
-function secondsToHumanTime(int $seconds)
+function secondsToHumanTime(int $seconds): string
 {
 	if ($seconds >= 86400)
 		$format[] = '%a day' . ($seconds > 86400 * 2 ? 's' : '');
@@ -20,10 +20,51 @@ function secondsToHumanTime(int $seconds)
 	return str_replace(' 1 seconds', ' 1 second', $dateHandle->diff(new DateTime("@$seconds"))->format(implode(', ', $format)));
 }
 
-function isHTMX()
+/**
+ * Determines if a request is made by HTMX.
+ *
+ * @return boolean
+ */
+function isHTMX(): bool
 {
 	$headers = getallheaders();
 	return ($headers !== false && isset($headers['Hx-Request']) && boolval($headers['Hx-Request']) === true);
+}
+
+
+/**
+ * Checks if a user has been previously authenticated.
+ *
+ * @return boolean
+ */
+function isAuthenticated(): bool
+{
+	if ((AUTHENTICATION_ENABLE === false) || (isset($_SESSION['account']['authenticated']) && $_SESSION['account']['authenticated'] === true))
+		return true;
+	else
+		return false;
+}
+
+/**
+ * Authenticates a user.
+ *
+ * @return boolean
+ */
+function authenticate(string $username, string $password): bool
+{
+	global $connection;
+
+	$user = $connection->select('SELECT password FROM User WHERE username = ?', array($username));
+	if ($user === false || count($user) !== 1)
+		return false;
+	$user = $user[0];
+	return password_verify($password, $user['password']);
+}
+
+function headerExit(string $destination): void
+{
+	header('Location: ' . $destination);
+	exit(1);
 }
 
 function rotate(array $array)
@@ -34,7 +75,7 @@ function rotate(array $array)
 	return $array;
 }
 
-function getAllPermission()
+function getAllPermission(): array
 {
 	global $connection;
 	$output = array();
@@ -49,7 +90,7 @@ function getAllPermission()
 	return $output;
 }
 
-function getAllPriority()
+function getAllPriority(): array
 {
 	global $connection;
 	$output = array();
@@ -64,7 +105,7 @@ function getAllPriority()
 	return $output;
 }
 
-function getAllType()
+function getAllType(): array
 {
 	global $connection;
 	$output = array();
@@ -79,7 +120,7 @@ function getAllType()
 	return $output;
 }
 
-function getAllStatus()
+function getAllStatus(): array
 {
 	global $connection;
 	$output = array();
@@ -94,7 +135,7 @@ function getAllStatus()
 	return $output;
 }
 
-function getAllResult()
+function getAllResult(): array
 {
 	global $connection;
 	$output = array();
@@ -109,42 +150,12 @@ function getAllResult()
 	return $output;
 }
 
-function getAllUser()
+function getAllUser(): array
 {
 	global $connection;
 	$output = array();
 
 	$results = $connection->select('SELECT * FROM User');
-	if ($results === false)
-		throw new Exception('Query failed (User). Contact adminstrator.');
-	foreach ($results as $row)
-	{
-		$output[] = new User($row);
-	}
-	return $output;
-}
-
-function getAllRequestors()
-{
-	global $connection;
-	$output = array();
-
-	$results = $connection->select('SELECT * FROM User WHERE Permission IN (?)', [implode(',', [2, 4])]);
-	if ($results === false)
-		throw new Exception('Query failed (User). Contact adminstrator.');
-	foreach ($results as $row)
-	{
-		$output[] = new User($row);
-	}
-	return $output;
-}
-
-function getAllReviewers()
-{
-	global $connection;
-	$output = array();
-
-	$results = $connection->select('SELECT * FROM User WHERE Permission IN (?)', [implode(',', [2, 5])]);
 	if ($results === false)
 		throw new Exception('Query failed (User). Contact adminstrator.');
 	foreach ($results as $row)

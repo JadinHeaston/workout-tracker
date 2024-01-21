@@ -38,8 +38,8 @@ foreach ($versionedFiles as $fileName => $hash)
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@duetds/date-picker@1.4.0/dist/duet/themes/default.css" /> -->
 </head>
 
-<body class="">
-	<header class="w-full text-2xl bg-red-400">
+<body>
+	<header>
 		<h1 class="w-full text-center"><a href="<?php echo APP_ROOT; ?>" hx-get="<?php echo APP_ROOT; ?>" hx-select="main" hx-target="main" hx-swap="outerHTML" hx-push-url="true">Workout Tracker</a></h1>
 		<?php require_once(__DIR__ . '/nav.php'); ?>
 	</header>

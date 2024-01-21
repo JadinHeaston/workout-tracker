@@ -33,7 +33,7 @@ CREATE OR REPLACE DATABASE workout_tracker;
 
 | Column Name | Description    | Datatype   |
 | ----------- | -------------- | ---------- |
-| id          | Auto-generated | BINARY(16) |
+| id          | Auto-generated | BINARY(36) |
 | name        |                | VARCHAR    |
 | description |                | VARCHAR    |
 
@@ -41,7 +41,7 @@ CREATE OR REPLACE DATABASE workout_tracker;
 
 ```sql
 CREATE TABLE `Group` (
-	id BINARY(16) NOT NULL DEFAULT UUID() PRIMARY KEY,
+	id BINARY(36) NOT NULL DEFAULT UUID() PRIMARY KEY,
 	name VARCHAR(64) NOT NULL,
 	description VARCHAR(256) NOT NULL
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
@@ -130,27 +130,29 @@ INSERT INTO Type (id, name, description) VALUES
 
 | Column Name   | Description         | Datatype         |
 | ------------- | ------------------- | ---------------- |
-| id            | Auto-generated      | BINARY(16)       |
+| id            | Auto-generated      | BINARY(36)       |
 | username      |                     | VARCHAR(64)      |
 | first_name    |                     | VARCHAR(50)      |
 | last_name     |                     | VARCHAR(50)      |
 | email         | Email Address       | VARCHAR(254)     |
-| group_id      | FK to group         | BINARY(16)       |
+| group_id      | FK to group         | BINARY(36)       |
 | permission_id | FK of Permission id | TINYINT UNSIGNED |
 
 #### SQL Creation
 
 ```sql
 CREATE TABLE `User` (
-	id BINARY(16) NOT NULL DEFAULT UUID() PRIMARY KEY,
+	id BINARY(36) NOT NULL DEFAULT UUID() PRIMARY KEY,
 	username VARCHAR(64) NOT NULL,
+	password CHAR(97) NOT NULL,
 	first_name VARCHAR(64) NOT NULL,
 	last_name VARCHAR(64) NOT NULL,
-	email VARCHAR(254) NOT NULL,
-	group_id BINARY(16),
-	permission TINYINT UNSIGNED NOT NULL,
+	email VARCHAR(254),
+	group_id BINARY(36),
+	permission TINYINT UNSIGNED NOT NULL DEFAULT 4,
 	CONSTRAINT `fk_permission` FOREIGN KEY (permission) REFERENCES `Permission` (id) ON DELETE RESTRICT ON UPDATE RESTRICT,
 	CONSTRAINT `fk_group_id` FOREIGN KEY (group_id) REFERENCES `Group` (id) ON DELETE RESTRICT ON UPDATE RESTRICT,
+	UNIQUE INDEX ix_username (username),
 	INDEX ix_permission (permission),
 	INDEX ix_group_id (group_id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
@@ -160,8 +162,8 @@ CREATE TABLE `User` (
 
 | Column Name | Description         | Datatype         |
 | ----------- | ------------------- | ---------------- |
-| id          | Auto-generated      | BINARY(16)       |
-| owner       | Change Owner (`ID`) | BINARY(16)       |
+| id          | Auto-generated      | BINARY(36)       |
+| owner       | Change Owner (`ID`) | BINARY(36)       |
 | type        |                     | TINYINT UNSIGNED |
 | start_time  |                     | DATETIME         |
 | end_time    |                     | DATETIME         |
@@ -171,8 +173,8 @@ CREATE TABLE `User` (
 
 ```sql
 CREATE TABLE `Workout` (
-	id BINARY(16) NOT NULL DEFAULT UUID() PRIMARY KEY,
-	owner BINARY(16) NOT NULL,
+	id BINARY(36) NOT NULL DEFAULT UUID() PRIMARY KEY,
+	owner BINARY(36) NOT NULL,
 	type TINYINT UNSIGNED NOT NULL,
 	start_time DATETIME NULL,
 	end_time DATETIME NULL,

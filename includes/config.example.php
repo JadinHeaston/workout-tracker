@@ -17,3 +17,6 @@ define('DB_TYPE', 'mysql');
 define('DB_PORT', 3306);
 define('DB_TRUST_CERT', 1);
 define('DB_CHARSET', 'utf8mb4');
+
+//AUTHENTICATION
+DEFINE('AUTHENTICATION_ENABLE', true);

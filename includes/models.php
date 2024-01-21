@@ -324,12 +324,21 @@ class User
 {
 	public string $id;
 	public string $username;
+	public string $password;
 	public string $firstName;
 	public string $lastName;
 	public string $email;
+	/** @var array<Group> */
+	public array $groups;
 	public Permission $permission;
 
-	public function __construct(array $databaseRow)
+	public function __construct(array $databaseRow = [])
+	{
+		if (count($databaseRow) > 0)
+			$this->importDBQuery($databaseRow);
+	}
+
+	public function importDBQuery(array $databaseRow): void
 	{
 		if (isset($databaseRow['id']))
 			$this->id = $databaseRow['id'];
@@ -341,14 +350,89 @@ class User
 			$this->lastName = $databaseRow['last_name'];
 		if (isset($databaseRow['email']))
 			$this->email = $databaseRow['email'];
+		if (isset($databaseRow['group_id']))
+			$this->groups[] = intval($databaseRow['group_id']);
 		if (isset($databaseRow['permission']))
 			$this->permission = Permission::from(intval($databaseRow['permission']));
 	}
 
-	public function displayOption()
+	public function displayOption(): string
 	{
 		return '<option value="' . $this->id . '">' . ucwords(strtolower($this->firstName)) . ' ' . ucwords(strtolower($this->lastName)) . ' (' . strtoupper($this->username) . ')</option>';
 	}
+
+	public function createAccount(): bool
+	{
+		global $connection;
+
+		if (
+			$this->username === ''
+			|| $this->password === ''
+			|| $this->firstName === ''
+			|| $this->lastName === ''
+			|| $this->email === ''
+		)
+			return false;
+		elseif ($this->accountExists())
+			return false;
+
+		$result = $connection->executeStatement('INSERT INTO User SET username = ?, password = ?, first_name = ?, last_name = ?, email = ?', [$this->username, $this->password, $this->firstName, $this->lastName, $this->email]);
+		if ($result !== false)
+			return true;
+		else
+			return false;
+	}
+
+	public function accountExists()
+	{
+		global $connection;
+
+		if ($this->username === '')
+			return false;
+
+		$user = $connection->select('SELECT id FROM User WHERE username = ?', [$this->username]);
+
+		if ($user !== false && count($user) === 1)
+			return true;
+		else
+			return false;
+	}
+
+	/**
+	 * Queries the DB to verify the password and username match.
+	 * Loads the values returned from the DB into the object.
+	 *
+	 * @return boolean
+	 */
+	public function authenticate(): bool
+	{
+		global $connection;
+
+		if (
+			$this->username === ''
+			|| $this->password === ''
+		)
+			return false;
+
+		$user = $connection->select('SELECT id, password, first_name, last_name, email, group_id, permission FROM User WHERE username = ?', [$this->username]);
+
+		if ($user !== false && count($user) === 1)
+			$user = $user[0];
+		else
+			return false;
+
+		if (password_verify($this->password, $user['password']) === true)
+		{
+			$this->importDBQuery($user);
+			return true;
+		}
+		else
+			return false;
+	}
+}
+
+class Group
+{
 }
 
 class Workout
