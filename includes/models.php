@@ -429,6 +429,22 @@ class User
 		else
 			return false;
 	}
+
+	/**
+	 * Utilizes the UUID to lookup the users information, filling out this object with the returned data.
+	 * A true/false is returned to indicate if the lookup was successful.
+	 *
+	 * @return boolean
+	 */
+	public function loopkup(string $ID): bool
+	{
+		global $connection;
+		$results = $connection->select('SELECT id, username, first_name, last_name, email, group_id, permission FROM User WHERE id = ?', [$ID]);
+		if ($results === false || count($results) !== 1)
+			return false;
+		$this->importDBQuery($results[0]);
+		return true;
+	}
 }
 
 class Group
