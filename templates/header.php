@@ -7,7 +7,6 @@ if (isHTMX())
 $versionedFiles = array(
 	APP_ROOT . 'assets/favicon.svg' => '',
 	APP_ROOT . 'css/styles.css' => '',
-	APP_ROOT . 'css/tailwind_output.css' => '',
 	APP_ROOT . 'js/scripts.js' => '',
 	APP_ROOT . 'vendors/htmx.min.js' => '',
 );
@@ -26,8 +25,7 @@ foreach ($versionedFiles as $fileName => $hash)
 	<title>Workout Tracker</title>
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<link rel="icon" href="<?php echo APP_ROOT; ?>assets/favicon.svg?v=<?PHP echo $versionedFiles[APP_ROOT . 'assets/favicon.svg'] ?>" type="image/svg+xml">
-	<!-- <link rel="stylesheet" href="<?php echo APP_ROOT; ?>css/styles.css?v=<?PHP echo $versionedFiles[APP_ROOT . 'css/styles.css'] ?>"> -->
-	<link rel="stylesheet" href="<?php echo APP_ROOT; ?>css/tailwind_output.css?v=<?PHP echo $versionedFiles[APP_ROOT . 'css/tailwind_output.css'] ?>">
+	<link rel="stylesheet" href="<?php echo APP_ROOT; ?>css/styles.css?v=<?PHP echo $versionedFiles[APP_ROOT . 'css/styles.css'] ?>">
 	<script src="<?php echo APP_ROOT; ?>js/scripts.js?v=<?PHP echo $versionedFiles[APP_ROOT . 'js/scripts.js'] ?>"></script>
 	<script src="<?php echo APP_ROOT; ?>vendors/htmx.min.js?v=<?PHP echo $versionedFiles[APP_ROOT . 'vendors/htmx.min.js'] ?>"></script>
 	<!-- <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
@@ -40,6 +38,6 @@ foreach ($versionedFiles as $fileName => $hash)
 
 <body>
 	<header>
-		<h1 class="w-full text-center"><a href="<?php echo APP_ROOT; ?>" hx-get="<?php echo APP_ROOT; ?>" hx-select="main" hx-target="main" hx-swap="outerHTML" hx-push-url="true">Workout Tracker</a></h1>
+		<h1><a href="<?php echo APP_ROOT; ?>" hx-get="<?php echo APP_ROOT; ?>" hx-select="main" hx-target="main" hx-swap="outerHTML" hx-push-url="true">Workout Tracker</a></h1>
 		<?php require_once(__DIR__ . '/nav.php'); ?>
 	</header>

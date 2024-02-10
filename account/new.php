@@ -28,8 +28,8 @@ require_once(__DIR__ . '/../templates/header.php');
 
 ?>
 
-<main>
-	<form id="login" class="w-full flex flex-col justify-center h-full" method="post">
+<main id="account-page">
+	<form id="login" method="post">
 		<input type="text" name="username" placeholder="Username" maxlength="64">
 		<input type="password" name="password" placeholder="Password">
 		<input type="text" name="firstName" placeholder="First" maxlength="64">
@@ -37,6 +37,7 @@ require_once(__DIR__ . '/../templates/header.php');
 		<input type="email" name="email" placeholder="Email" maxlength="254">
 		<div>
 			<button type="submit" name="type" value="create">Create Account</button>
+			<a href="<?php echo APP_ROOT; ?>account/login.php" hx-get="<?php echo APP_ROOT; ?>account/login.php" hx-select="main" hx-target="main" hx-swap="outerHTML" hx-push-url="true">Sign in with existing account</button>
 		</div>
 	</form>
 </main>

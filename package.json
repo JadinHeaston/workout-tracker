@@ -4,10 +4,7 @@
 		"@types/jquery": "^3.5.25",
 		"@types/select2": "^4.0.60"
 	},
-	"devDependencies": {
-		"tailwindcss": "^3.4.1"
-	},
 	"scripts": {
-		"build": "tsc && npx tailwindcss -i ./css/tailwind.css -o ./css/tailwind_output.css"
+		"build": "tsc"
 	}
 }

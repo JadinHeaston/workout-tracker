@@ -2,7 +2,7 @@
 if (isHTMX())
 	return;
 ?>
-<footer class="bg-blue-400">
+<footer>
 </footer>
 </body>
 

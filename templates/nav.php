@@ -3,8 +3,8 @@ if (!isAuthenticated())
 	return false;
 ?>
 <nav>
-	<button id="main-nav-button" class="peer">
-		<svg class="h-8 w-8" id="menu-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+	<button id="main-nav-button">
+		<svg id="menu-icon" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
 			<style>
 				#menu-icon {
 					--menu-icon-duration: 300ms;
@@ -53,21 +53,21 @@ if (!isAuthenticated())
 			</g>
 		</svg>
 	</button>
-	<ul id="main-nav-menu" class="opacity-0 pointer-events-none peer-hover:opacity-100 peer-hover:pointer-events-auto hover:opacity-100 hover:pointer-events-auto">
+	<ul id="main-nav-menu">
 		<li class="main-nav-menu-item">
-			<a class="text-orange-800" href="<?php echo APP_ROOT; ?>workout/new.php" hx-get="<?php echo APP_ROOT; ?>workout/new.php" hx-select="main" hx-target="main" hx-swap="outerHTML" hx-push-url="true">New Workout</a>
+			<a href="<?php echo APP_ROOT; ?>workout/new.php" hx-get="<?php echo APP_ROOT; ?>workout/new.php" hx-select="main" hx-target="main" hx-swap="outerHTML" hx-push-url="true">New Workout</a>
 		</li>
 		<li class="main-nav-menu-item">
-			<a class="text-orange-800" href="<?php echo APP_ROOT; ?>workout/history.php" hx-get="<?php echo APP_ROOT; ?>workout/history.php" hx-select="main" hx-target="main" hx-swap="outerHTML" hx-push-url="true">Workout History</a>
+			<a href="<?php echo APP_ROOT; ?>workout/history.php" hx-get="<?php echo APP_ROOT; ?>workout/history.php" hx-select="main" hx-target="main" hx-swap="outerHTML" hx-push-url="true">Workout History</a>
 		</li>
 		<li class="main-nav-menu-item">
-			<a class="text-orange-800" href="<?php echo APP_ROOT; ?>administration/" hx-get="<?php echo APP_ROOT; ?>administration/" hx-select="main" hx-target="main" hx-swap="outerHTML" hx-push-url="true">Administration</a>
+			<a href="<?php echo APP_ROOT; ?>administration/" hx-get="<?php echo APP_ROOT; ?>administration/" hx-select="main" hx-target="main" hx-swap="outerHTML" hx-push-url="true">Administration</a>
 		</li>
 		<li class="main-nav-menu-item">
-			<a class="text-orange-800" href="<?php echo APP_ROOT; ?>account/" hx-get="<?php echo APP_ROOT; ?>account/" hx-select="main" hx-target="main" hx-swap="outerHTML" hx-push-url="true">Account</a>
+			<a href="<?php echo APP_ROOT; ?>account/" hx-get="<?php echo APP_ROOT; ?>account/" hx-select="main" hx-target="main" hx-swap="outerHTML" hx-push-url="true">Account</a>
 		</li>
 		<li class="main-nav-menu-item">
-			<a class="text-orange-800" href="<?php echo APP_ROOT; ?>account/logout.php" hx-get="<?php echo APP_ROOT; ?>account/logout.php" hx-select="main" hx-target="main" hx-swap="outerHTML" hx-push-url="true">Logout</a>
+			<a href="<?php echo APP_ROOT; ?>account/logout.php" hx-get="<?php echo APP_ROOT; ?>account/logout.php" hx-select="main" hx-target="main" hx-swap="outerHTML" hx-push-url="true">Logout</a>
 		</li>
 	</ul>
 </nav>

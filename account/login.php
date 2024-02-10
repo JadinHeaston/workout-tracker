@@ -27,9 +27,9 @@ require_once(__DIR__ . '/../templates/header.php');
 
 ?>
 
-<main>
-	<form id="login" class="w-full flex flex-col justify-center items-center h-full" method="post">
-		<div class="flex flex-col justify-center items-center">
+<main id="account-page">
+	<form id="login" method="post">
+		<div>
 			<?php
 			echo file_get_contents(__DIR__ . '/../assets/favicon.svg');
 			?>
